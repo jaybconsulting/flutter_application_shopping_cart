@@ -181,38 +181,57 @@ class _ShoppingListState extends State<ShoppingList> {
     });
   }
 
+  ButtonStyle _getButtonStyle(BuildContext context) {
+    return ButtonStyle(
+      backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+      foregroundColor: const MaterialStatePropertyAll<Color>(Colors.black),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _addAllItemsToCart(), 
-              child: const Text("Check all items")
-            ),
-            const SizedBox(width: 16),
-            ElevatedButton(
-              onPressed: () => _removeAllItemsFromCart(),
-              child: const Text("Uncheck all items"),
-            ),
-          ]),
-        Expanded(
-          child: ListView.builder(
-              itemCount: shoppingList.length,
-              itemBuilder: (context, index) {
-                return ShoppingListItem(
-                  item: shoppingList[index],
-                  inCart: cart.contains(shoppingList[index]),
-                  toggleInCart: _toggleItemInCart,
-                  deleteItem: _deleteItem,
-                );
-              }),
+      appBar:  
+        AppBar(
+          title: const Text('Shopping List'),
+          backgroundColor: Theme.of(context).primaryColor,
         ),
-      ]),
+      body: 
+        Padding(padding: const EdgeInsets.all(10),      
+          child: 
+            Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => _addAllItemsToCart(), 
+                    style: _getButtonStyle(context),
+                    child: const Text("Check all items"),
+                  ),
+                  const SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: () => _removeAllItemsFromCart(),
+                    style: _getButtonStyle(context),
+                    child: const Text("Uncheck all items"),
+                  ),
+                ]),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: shoppingList.length,
+                    itemBuilder: (context, index) {
+                      return ShoppingListItem(
+                        item: shoppingList[index],
+                        inCart: cart.contains(shoppingList[index]),
+                        toggleInCart: _toggleItemInCart,
+                        deleteItem: _deleteItem,
+                      );
+                    }),
+              ),
+            ]),
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addItem,
+        backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.add),
       ),
     );
@@ -225,18 +244,18 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.red),
+      theme: 
+        ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple, secondary: Colors.orange),
+        ),
+
       home: 
         GestureDetector(
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text('ShoppingList'),
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            body: const ShoppingList(),
+          child: const Scaffold(
+            body: ShoppingList(),
           ),
         ),
     );

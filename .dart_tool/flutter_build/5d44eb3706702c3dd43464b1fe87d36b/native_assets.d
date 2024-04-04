@@ -1,0 +1,1 @@
+ /Users/jayboychuk/Documents/app-development/flutter_application_shopping_cart/.dart_tool/flutter_build/5d44eb3706702c3dd43464b1fe87d36b/native_assets.yaml: 
