@@ -60,14 +60,6 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   }
 
   @override
-  void didUpdateWidget(ShoppingListItem oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget != oldWidget) {
-      _controller.text = widget.item.name;
-    }
-  }
-
-  @override
   void initState() {
     super.initState();
 
@@ -82,6 +74,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         _submitTextField();
       }
     });
+
+    _focusNode.requestFocus();
   }
 
   @override
@@ -118,6 +112,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         ),
       ]),
       onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
         widget.toggleInCart(widget.item);
       },
     );
@@ -224,6 +219,7 @@ class _ShoppingListState extends State<ShoppingList> {
                         inCart: cart.contains(shoppingList[index]),
                         toggleInCart: _toggleItemInCart,
                         deleteItem: _deleteItem,
+                        key: ValueKey(shoppingList[index].name),
                       );
                     }),
               ),
